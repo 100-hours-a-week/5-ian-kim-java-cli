@@ -2,16 +2,24 @@ package util;
 
 public class DrawBox {
     public static void drawBox(int width, int height, String text) {
-        int textLength = text.codePointCount(0, text.length());
+
+        String[] lines = text.split("\n");
+
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].trim();
+        }
+
 
         if (width < 2) {
             System.out.println("너무 작은 크기의 박스입니다.");
             return;
         }
 
-        if (width < textLength) {
-            System.out.println("텍스트 길이가 너무 깁니다.");
-            return;
+        for (String line : lines) {
+            if (width < line.codePointCount(0, line.length())) {
+                System.out.println("텍스트 길이가 너무 깁니다.");
+                return;
+            }
         }
 
         String topHorizontalLine = "┏" + "━".repeat(width - 2) + "┓";
@@ -23,10 +31,18 @@ public class DrawBox {
 
         // 중간 부분 출력 (가로 맨 앞, 가운데 문자열, 가로 맨 뒤)
         for (int i = 0; i < height; i++) {
-            if (i == (height / 2)) {
-                System.out.println("┃" + centerString(text, width - 2) + "┃");
+            if (lines.length == 1) {
+                if (i == height / 2) {
+                    System.out.println("┃" + centerString(lines[0], width - 2) + "┃");
+                } else {
+                    System.out.println(emptyLine);
+                }
             } else {
-                System.out.println(emptyLine);
+                if (i >= (height / 2) - (lines.length / 2) && i < (height / 2) + (lines.length / 2)) {
+                    System.out.println("┃" + centerString(lines[i - (height / 2) + (lines.length / 2)], width - 2) + "┃");
+                } else {
+                    System.out.println(emptyLine);
+                }
             }
         }
 
@@ -43,6 +59,17 @@ public class DrawBox {
             return text;
         }
         int padding = (length - textLength) / 2;
-        return " ".repeat(padding) + text + " ".repeat(padding);
+        int remainder = (length - textLength) % 2;
+        // 전체 길이와 문자열의 길이가 홀수인지 짝수인지 확인
+        boolean isTotalLengthEven = length % 2 == 0;
+        boolean isTextLengthEven = textLength % 2 == 0;
+
+        if (isTotalLengthEven == isTextLengthEven) {
+            // 전체 길이와 문자열의 길이가 모두 홀수이거나 모두 짝수인 경우
+            return " ".repeat(padding - remainder) + text + " ".repeat(padding + remainder);
+        } else {
+            // 전체 길이와 문자열의 길이가 홀수와 짝수인 경우
+            return " ".repeat(padding) + text + " ".repeat(padding + remainder);
+        }
     }
 }
