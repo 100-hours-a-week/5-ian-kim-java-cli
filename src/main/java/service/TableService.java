@@ -25,16 +25,18 @@ public class TableService {
         }
     }
 
-    public void settingTable(int tableNumber) {
+    public boolean settingTable(int tableNumber) {
         for(Table table : tables) {
             if(table.getTableNumber() == tableNumber) {
                 if(table.getIsOccupied()) {
                     System.out.println("----이미 사용중인 테이블입니다.----");
-                    return;
+                    return false;
                 }
                 table.occupyTable();
+                return true;
             }
         }
+        return false;
     }
 
 
