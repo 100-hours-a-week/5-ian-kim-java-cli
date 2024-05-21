@@ -46,8 +46,9 @@ public class OrderService {
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 return;
         }
-        for (Order order : orders) {
-            if (order.getTable().getTableNumber() == tableId) {
+
+        List<Order> orderList = tableService.getOrderHistory(tableId);
+        for (Order order : orderList) {
                 System.out.println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃");
                 System.out.println(formatLine("주문번호: " + order.getId(), maxWidth));
                 System.out.println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃");
@@ -61,7 +62,7 @@ public class OrderService {
                 System.out.println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃");
                 System.out.println(formatLine("총 가격: " + order.calculateTotalPrice() + "원",maxWidth));
                 System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            }
+
         }
     }
 }
