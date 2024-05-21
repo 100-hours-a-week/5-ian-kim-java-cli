@@ -1,18 +1,20 @@
 package domain;
 
+import enums.EmployeeRole;
+
 public class Employee extends Person {
 
-    Role role;;
+    EmployeeRole employeeRole;;
     int hourlyRate;     //시급
 
-    public Employee(String name, Role role, int hourlyRate) {
+    public Employee(String name, EmployeeRole employeeRole, int hourlyRate) {
         super(name);
-        this.role = role;
+        this.employeeRole = employeeRole;
         this.hourlyRate = hourlyRate;
     }
 
-    public Role getRole() {
-        return role;
+    public EmployeeRole getRole() {
+        return employeeRole;
     }
 
     public int getHourlyRate() {
