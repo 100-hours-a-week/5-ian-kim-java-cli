@@ -13,15 +13,16 @@ import static util.DrawBox.*;
 
 public class OrderService {
     private final TableService tableService;
-    private final OrderItemService orderItemService = new OrderItemService();
+    private final OrderItemService orderItemService;
+
 
     private final List<Order> orders;
 
-    public OrderService(TableService tableService) {
+    public OrderService(TableService tableService, OrderItemService orderItemService) {
         orders = new ArrayList<>();
         this.tableService = tableService;
+        this.orderItemService = orderItemService;
     }
-
 
     public void createOrder(int tableId) {
         List<OrderItem> orderItems = orderItemService.createOrderItem();

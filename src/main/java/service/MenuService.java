@@ -3,15 +3,15 @@ package service;
 import domain.Category;
 import domain.Item;
 import util.AsciiArt;
+import util.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
+
+import static util.InputHandler.*;
 
 public class MenuService {
-    Scanner sc = new Scanner(System.in);
-
     Category c100 = new Category("튀김류", 100);
     Category c200 = new Category("탕류", 200);
     Category c300 = new Category("주류", 300);
@@ -19,9 +19,12 @@ public class MenuService {
     Category c500 = new Category("사이드메뉴", 500);
 
     List<Category> categories = new ArrayList<>();
-    List<Item> items = new ArrayList<>();
 
     public MenuService() {
+
+    }
+
+    public void defaultMenu() {
         categories.add(c100);
         categories.add(c200);
         categories.add(c300);
@@ -46,7 +49,6 @@ public class MenuService {
         c500.addItem(new Item("치즈스틱", 6000, 20)); // 사이드메뉴
         c500.addItem(new Item("감자샐러드", 7000, 20)); // 사이드메뉴
         c500.addItem(new Item("계란말이", 6000, 20)); // 사이드메뉴
-
     }
 
 
@@ -106,15 +108,13 @@ public class MenuService {
         for (Category category : categories) {
             System.out.printf("%-20d %-20s%n", category.getIdCounter() / 100, category.getCategoryName());
         }
-        System.out.print("카테고리의 ID를 선택하세요 : ");
-        int categorySelect = Integer.parseInt(sc.nextLine());
+        int categorySelect = getIntInput("카테고리의 ID를 선택하세요 : ");
         return categories.stream().filter(category -> category.getIdCounter() / 100 == categorySelect).findFirst();
     }
 
     public void itemDelete() {
         displayMenu();
-        System.out.println("삭제할 아이템의 ID를 입력하세요 : ");
-        int itemId = Integer.parseInt(sc.nextLine());
+        int itemId = getIntInput("삭제할 아이템의 ID를 입력하세요 : ");
         Optional<Item> findItem = findItemById(itemId);
 
         System.out.println(findItem.toString());
@@ -131,8 +131,7 @@ public class MenuService {
 
     public void itemUpdate() {
         displayMenu();
-        System.out.println("수정할 아이템의 ID를 입력하세요 : ");
-        int itemId = Integer.parseInt(sc.nextLine());
+        int itemId = getIntInput("수정할 아이템의 ID를 입력하세요 : ");
         Optional<Item> findItem = findItemById(itemId);
 
         if (findItem.isPresent()) {
@@ -153,8 +152,7 @@ public class MenuService {
     }
 
     private String inputItemName() {
-        System.out.print("아이템의 이름을 입력하세요: ");
-        String itemName = sc.nextLine();
+        String itemName = getStringInput("아이템의 이름을 입력하세요: ");
         if (itemName.length() > 20) {
             System.out.println("아이템의 이름은 20자 이하여야 합니다.");
             return null;
@@ -163,9 +161,8 @@ public class MenuService {
     }
 
     private Integer inputItemPrice() {          //
-        System.out.print("아이템의 가격을 입력하세요: ");
         try {
-            int itemPrice = Integer.parseInt(sc.nextLine());
+            int itemPrice = getIntInput("아이템의 가격을 입력하세요: ");
             if (itemPrice < 0) {
                 System.out.println("가격은 0원 이상이어야 합니다.");
                 return null;
@@ -178,9 +175,8 @@ public class MenuService {
     }
 
     private Integer inputItemStock() {
-        System.out.println("아이템의 재고를 입력하세요: ");
         try {
-            int itemStock = Integer.parseInt(sc.nextLine());
+            int itemStock = getIntInput("아이템의 재고를 입력하세요: ");
             if (itemStock < 0) {
                 System.out.println("재고는 0개 이상이어야 합니다.");
                 return null;
