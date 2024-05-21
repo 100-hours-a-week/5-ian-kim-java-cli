@@ -1,8 +1,7 @@
 package service;
 
 import domain.Employee;
-import domain.Role;
-import util.DrawBox;
+import enums.EmployeeRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +26,16 @@ public class EmployeeService {
                     System.out.println("직원의 역할을 선택하세요: \n");
                     drawBox(60,3,"1. MANAGER     2. EMPLOYEE     3. INTERN");
                     int roleChoice = sc.nextInt();
-                    Role role;
+                    EmployeeRole employeeRole;
                     switch (roleChoice) {
                         case 1:
-                            role = Role.MANAGER;
+                            employeeRole = EmployeeRole.MANAGER;
                             break;
                         case 2:
-                            role = Role.EMPLOYEE;
+                            employeeRole = EmployeeRole.EMPLOYEE;
                             break;
                         case 3:
-                            role = Role.INTERN;
+                            employeeRole = EmployeeRole.INTERN;
                             break;
                         default:
                             System.out.println("잘못된 입력입니다.");
@@ -44,7 +43,7 @@ public class EmployeeService {
                     }
                     System.out.print("직원의 시급을 입력하세요: ");
                     int hourlyRate = sc.nextInt();
-                    addEmployee(new Employee(name, role, hourlyRate));
+                    addEmployee(new Employee(name, employeeRole, hourlyRate));
                     System.out.println("직원이 성공적으로 추가되었습니다.");
                     break;
                 case 2:

@@ -1,6 +1,6 @@
-package domain;
+package enums;
 
-public enum Role {
+public enum EmployeeRole {
         MANAGER,
         EMPLOYEE,
         INTERN
