@@ -40,6 +40,12 @@ public class OrderService {
         System.out.println("┃　　　　　　　　　　　　　　　　　　 　　　　　　　　　　 　　　┃");
         System.out.println("┃　　　　　               [주문 내역]                  　　　 　 ┃");
         System.out.println("┃　　　　　　　　　　　　　　　　　　　　　　　　　 　　　　　　 ┃");
+        if(orders.isEmpty()) {
+                System.out.println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃");
+                System.out.println(formatLine("해당 테이블의 주문 내역이 없습니다.",maxWidth));
+                System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+                return;
+        }
         for (Order order : orders) {
             if (order.getTable().getTableNumber() == tableId) {
                 System.out.println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃");
