@@ -29,8 +29,8 @@ public class MenuService {
         categories.add(c500);
 
         // 카테고리에 항목 추가
-        c100.addItem(new Item("치킨 너겟", 10000, 0)); // 튀김류
-        c100.addItem(new Item("감자 튀김", 8000, 0)); // 튀김류
+        c100.addItem(new Item("치킨 너겟", 10000, 20)); // 튀김류
+        c100.addItem(new Item("감자 튀김", 8000, 20)); // 튀김류
         c200.addItem(new Item("된장찌개", 12000, 20)); // 탕류류
         c200.addItem(new Item("김치찌개", 10000, 20)); // 탕류류
         c200.addItem(new Item("부대찌개", 15000, 20)); // 탕류류
@@ -62,12 +62,24 @@ public class MenuService {
             System.out.println("=================================================");
             for (Item item : category.getItems()) {
                 if(item.getStock()>0) {
-                    int padding = 20 - item.getName().length();
+                    int padding = 20 - item.getName().length() + (countSpaces(item.getName()));
                     System.out.printf("%-10d %-" + padding + "s %5d원\n", item.getId(), item.getName(), item.getPrice());
                 }
             }
             System.out.println("================================================\n\n");
         }
+    }
+
+    // 공백 크기를 계산해서 그만큼 더해준다.
+    // 공백은 1byte로 계산되고 한글은 2byte로 계산된다.
+    private int countSpaces(String str) {
+        int count = 0;
+        for (char c : str.toCharArray()) {
+            if (Character.isWhitespace(c)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void itemRegister() {

@@ -37,4 +37,14 @@ public class Table {
     public void freeTable() {
         this.isOccupied = false;
     }
+
+    public List<Order> orderHistory(int tableNumber) {
+        List<Order> orderList = new ArrayList<>();
+        for(Order order : orders) {
+            if(order.getTable().getTableNumber() == tableNumber) {
+                orderList.add(order);
+            }
+        }
+        return orderList;
+    }
 }

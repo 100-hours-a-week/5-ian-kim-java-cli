@@ -1,9 +1,6 @@
 import domain.Category;
 import domain.Item;
-import service.EmployeeService;
-import service.MenuService;
-import service.OrderService;
-import service.TableService;
+import service.*;
 import util.PasswordManager;
 
 import java.util.Scanner;
@@ -13,6 +10,7 @@ import static util.DrawBox.drawBox;
 public class Main {
     public static void main(String[] args) {
         TableService tableService = new TableService();
+        PayService payService = new PayService(tableService);
         EmployeeService employeeService = new EmployeeService();
         OrderService orderService = new OrderService(tableService);
         MenuService menuService = new MenuService();
@@ -36,7 +34,7 @@ public class Main {
 //                            break;
 //                        }
 
-                        drawBox(100, 5, "1. 메뉴 선택       2. 주문 확인       3. 주문 취소       4. 뒤로 가기");
+                        drawBox(100, 5, "1. 메뉴 선택       2. 주문 확인       3. 결제 하기       4. 뒤로 가기");
                         System.out.print("메뉴를 선택하세요 : ");
                         int selectedCustomer = Integer.parseInt(sc.nextLine());
                         switch (selectedCustomer) {
@@ -48,7 +46,7 @@ public class Main {
                                 orderService.orderHistory(table);
                                 break;
                             case 3:
-                                System.out.println("주문 취소");
+                                payService.displayPayment(table);
                                 break;
                             case 4:
                                 customer = false;
