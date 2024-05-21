@@ -32,7 +32,7 @@ public class AsciiArt {
                 |  |  |  | |  |____ |  |\\   | |  `--'  |\s
                 |__|  |__| |_______||__| \\__|  \\______/ \s
                                 
-                                
+                            
                 """;
         System.out.println(asciiArt);
     }

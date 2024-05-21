@@ -2,30 +2,28 @@ package service;
 
 import domain.Employee;
 import enums.EmployeeRole;
+import util.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import static util.DrawBox.*;
+import static util.InputHandler.*;
 
 public class EmployeeService {
     List<Employee> employees= new ArrayList<>();
 
     public void manageEmployees() {
-        Scanner sc = new Scanner(System.in);
         boolean running = true;
         while (running) {
             drawBox(80,5,"1. 직원 추가     2. 직원 삭제     3. 직원 정보 확인     4. 뒤로가기");
-            System.out.print("메뉴를 선택하세요: ");
-            int menu = sc.nextInt();
+            int menu = getIntInput("메뉴를 선택하세요: ");
             switch (menu) {
                 case 1:
-                    System.out.print("직원 이름을 입력하세요: \n");
-                    String name = sc.next();
-                    System.out.println("직원의 역할을 선택하세요: \n");
+                    String name = getStringInput("직원 이름을 입력하세요: ");
                     drawBox(60,3,"1. MANAGER     2. EMPLOYEE     3. INTERN");
-                    int roleChoice = sc.nextInt();
+                    int roleChoice = getIntInput("직원의 역할을 선택하세요: ");
                     EmployeeRole employeeRole;
                     switch (roleChoice) {
                         case 1:
@@ -41,14 +39,12 @@ public class EmployeeService {
                             System.out.println("잘못된 입력입니다.");
                             return;
                     }
-                    System.out.print("직원의 시급을 입력하세요: ");
-                    int hourlyRate = sc.nextInt();
+                    int hourlyRate = getIntInput("직원의 시급을 입력하세요: ");
                     addEmployee(new Employee(name, employeeRole, hourlyRate));
                     System.out.println("직원이 성공적으로 추가되었습니다.");
                     break;
                 case 2:
-                    System.out.print("삭제할 직원의 이름을 입력하세요: ");
-                    String deleteName = sc.next();
+                    String deleteName = getStringInput("삭제할 직원의 이름을 입력하세요: ");
                     Employee employeeToDelete = null;
                     for (Employee employee : employees) {
                         if (employee.getName().equals(deleteName)) {
@@ -83,10 +79,4 @@ public class EmployeeService {
     public void addEmployee(Employee employee) {
         employees.add(employee);
     }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-
 }
