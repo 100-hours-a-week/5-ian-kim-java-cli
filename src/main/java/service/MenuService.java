@@ -2,6 +2,7 @@ package service;
 
 import domain.Category;
 import domain.Item;
+import util.AsciiArt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,20 +54,9 @@ public class MenuService {
         return categories;
     }
 
+
     public void displayMenu() {
-        String asciiArt = """
-                                
-                                
-                .___  ___.  _______ .__   __.  __    __ \s
-                |   \\/   | |   ____||  \\ |  | |  |  |  |\s
-                |  \\  /  | |  |__   |   \\|  | |  |  |  |\s
-                |  |\\/|  | |   __|  |  . `  | |  |  |  |\s
-                |  |  |  | |  |____ |  |\\   | |  `--'  |\s
-                |__|  |__| |_______||__| \\__|  \\______/ \s
-                                
-                                
-                """;
-        System.out.println(asciiArt);
+        AsciiArt.mainLogo();
         for (Category category : categories) {
             System.out.println(category.getCategoryName());
             System.out.println("=================================================");
@@ -172,7 +162,7 @@ public class MenuService {
     }
 
 
-    private Optional<Item> findItemById(int itemId) {
+    public Optional<Item> findItemById(int itemId) {
         return categories.stream()
                 .flatMap(category -> category.getItems().stream())
                 .filter(item -> item.getId() == itemId)

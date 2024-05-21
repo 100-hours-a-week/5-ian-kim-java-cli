@@ -7,6 +7,7 @@ public class DrawBox {
 
         for (int i = 0; i < lines.length; i++) {
             lines[i] = lines[i].trim();
+            System.out.println(lines[i]);
         }
 
 
@@ -29,20 +30,15 @@ public class DrawBox {
         // 상단 가로선 출력
         System.out.println(topHorizontalLine);
 
-        // 중간 부분 출력 (가로 맨 앞, 가운데 문자열, 가로 맨 뒤)
+        int textStart = (height - lines.length)/2;
+
+
         for (int i = 0; i < height; i++) {
-            if (lines.length == 1) {
-                if (i == height / 2) {
-                    System.out.println("┃" + centerString(lines[0], width - 2) + "┃");
-                } else {
-                    System.out.println(emptyLine);
-                }
+            if (i >= textStart && i < textStart + lines.length) {
+                int lineIndex = i - textStart;
+                System.out.println("┃" + centerString(lines[lineIndex], width - 2) + "┃");
             } else {
-                if (i >= (height / 2) - (lines.length / 2) && i < (height / 2) + (lines.length / 2)) {
-                    System.out.println("┃" + centerString(lines[i - (height / 2) + (lines.length / 2)], width - 2) + "┃");
-                } else {
-                    System.out.println(emptyLine);
-                }
+                System.out.println(emptyLine);
             }
         }
 
@@ -71,5 +67,13 @@ public class DrawBox {
             // 전체 길이와 문자열의 길이가 홀수와 짝수인 경우
             return " ".repeat(padding) + text + " ".repeat(padding + remainder);
         }
+    }
+
+
+    public static String formatLine(String text, int width) {
+        int textLength = text.codePoints().map(cp -> Character.UnicodeScript.of(cp) == Character.UnicodeScript.HANGUL ? 2 : 1).sum();
+        int paddingSize = width - textLength-2; // Subtract 4 for the "┃ " and " ┃" on either side of the text
+        String padding = " ".repeat(Math.max(paddingSize, 0));
+        return "┃ " + text + padding + " ┃";
     }
 }
