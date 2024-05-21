@@ -1,24 +1,22 @@
 package domain;
 
 
+import exception.OutOfStockException;
+
 public class Item {
     private int id;
     private String name;
     private int price;
+    private int stock;
     private Category category;
 
 
-    public Item(String name, int price) {
+    public Item(String name, int price, int stock) {
         this.name = name;
         this.price = price;
+        this.stock = stock;
     }
 
-    public Item(int id, String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-
-    }
 
     public int getId() {
         return id;
@@ -42,6 +40,24 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void removeStock(int stock) {
+        int restStock = this.stock - stock;
+        if (restStock < 0) {
+            throw new OutOfStockException("상품의 재고가 부족합니다(현재 수량: " + this.stock + ")");
+        }
+        else {
+            this.stock = restStock;
+        }
     }
 
     public Category getCategory() {

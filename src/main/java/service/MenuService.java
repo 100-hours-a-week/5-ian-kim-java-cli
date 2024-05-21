@@ -29,23 +29,23 @@ public class MenuService {
         categories.add(c500);
 
         // 카테고리에 항목 추가
-        c100.addItem(new Item("치킨 너겟", 10000)); // 튀김류
-        c100.addItem(new Item("감자 튀김", 8000)); // 튀김류
-        c200.addItem(new Item("된장찌개", 12000)); // 탕류류
-        c200.addItem(new Item("김치찌개", 10000)); // 탕류류
-        c200.addItem(new Item("부대찌개", 15000)); // 탕류류
-        c300.addItem(new Item("맥주", 5000)); // 주류
-        c300.addItem(new Item("소주", 4000)); // 주류
-        c300.addItem(new Item("위스키", 10000)); // 주류
-        c300.addItem(new Item("와인", 15000)); // 주류
-        c400.addItem(new Item("콜라", 2000)); // 음료
-        c400.addItem(new Item("오렌지 주스", 3000)); // 음료
-        c400.addItem(new Item("레몬에이드", 3000)); // 음료
-        c400.addItem(new Item("아메리카노", 4000)); // 음료
-        c500.addItem(new Item("감자 튀김", 5000)); // 사이드메뉴
-        c500.addItem(new Item("치즈스틱", 6000)); // 사이드메뉴
-        c500.addItem(new Item("감자샐러드", 7000)); // 사이드메뉴
-        c500.addItem(new Item("계란말이", 6000)); // 사이드메뉴
+        c100.addItem(new Item("치킨 너겟", 10000, 0)); // 튀김류
+        c100.addItem(new Item("감자 튀김", 8000, 0)); // 튀김류
+        c200.addItem(new Item("된장찌개", 12000, 20)); // 탕류류
+        c200.addItem(new Item("김치찌개", 10000, 20)); // 탕류류
+        c200.addItem(new Item("부대찌개", 15000, 20)); // 탕류류
+        c300.addItem(new Item("맥주", 5000, 20)); // 주류
+        c300.addItem(new Item("소주", 4000, 20)); // 주류
+        c300.addItem(new Item("위스키", 10000, 20)); // 주류
+        c300.addItem(new Item("와인", 15000, 20)); // 주류
+        c400.addItem(new Item("콜라", 2000, 20)); // 음료
+        c400.addItem(new Item("오렌지 주스", 3000, 20)); // 음료
+        c400.addItem(new Item("레몬에이드", 3000, 20)); // 음료
+        c400.addItem(new Item("아메리카노", 4000, 20)); // 음료
+        c500.addItem(new Item("감자 튀김", 5000, 20)); // 사이드메뉴
+        c500.addItem(new Item("치즈스틱", 6000, 20)); // 사이드메뉴
+        c500.addItem(new Item("감자샐러드", 7000, 20)); // 사이드메뉴
+        c500.addItem(new Item("계란말이", 6000, 20)); // 사이드메뉴
 
     }
 
@@ -56,13 +56,15 @@ public class MenuService {
 
 
     public void displayMenu() {
-        AsciiArt.mainLogo();
+        AsciiArt.menuLogo();
         for (Category category : categories) {
             System.out.println(category.getCategoryName());
             System.out.println("=================================================");
             for (Item item : category.getItems()) {
-                int padding = 20 - item.getName().length();
-                System.out.printf("%-10d %-" + padding + "s %5d원\n", item.getId(), item.getName(), item.getPrice());
+                if(item.getStock()>0) {
+                    int padding = 20 - item.getName().length();
+                    System.out.printf("%-10d %-" + padding + "s %5d원\n", item.getId(), item.getName(), item.getPrice());
+                }
             }
             System.out.println("================================================\n\n");
         }
@@ -73,11 +75,11 @@ public class MenuService {
         if (findCategory.isPresent()) {
             Category selectedCategory = findCategory.get();
             String itemName = inputItemName();
-            if (itemName == null) return;
             Integer itemPrice = inputItemPrice();
-            if (itemPrice == null) return;
+            Integer itemStock = inputItemStock();
+            if (itemName == null || itemPrice == null || itemStock == null) return;
 
-            Item item = new Item(itemName, itemPrice);
+            Item item = new Item(itemName, itemPrice, itemStock);
             selectedCategory.addItem(item);
 
             System.out.println("아이템이 성공적으로 등록되었습니다.");
@@ -124,11 +126,13 @@ public class MenuService {
         if (findItem.isPresent()) {
             Item item = findItem.get();
             String itemName = inputItemName();
-            if (itemName == null) return;
             Integer itemPrice = inputItemPrice();
-            if (itemPrice == null) return;
+            Integer itemStock = inputItemStock();
+            if (itemName == null || itemPrice == null || itemStock == null) return;
+
             item.setName(itemName);
             item.setPrice(itemPrice);
+            item.setStock(itemStock);
 
             System.out.println("아이템이 성공적으로 수정되었습니다.");
         } else {
@@ -157,6 +161,21 @@ public class MenuService {
             return itemPrice;
         } catch (NumberFormatException e) {
             System.out.println("가격은 숫자로 입력해주세요.");
+            return null;
+        }
+    }
+
+    private Integer inputItemStock() {
+        System.out.println("아이템의 재고를 입력하세요: ");
+        try {
+            int itemStock = Integer.parseInt(sc.nextLine());
+            if (itemStock < 0) {
+                System.out.println("재고는 0개 이상이어야 합니다.");
+                return null;
+            }
+            return itemStock;
+        } catch (NumberFormatException e) {
+            System.out.println("재고는 숫자로 입력해주세요.");
             return null;
         }
     }

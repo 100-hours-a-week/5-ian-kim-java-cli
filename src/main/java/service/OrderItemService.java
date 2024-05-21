@@ -2,6 +2,7 @@ package service;
 
 import domain.Item;
 import domain.OrderItem;
+import exception.OutOfStockException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,13 @@ public class OrderItemService {
             int count = Integer.parseInt(sc.nextLine());
             Optional<Item> item = menuService.findItemById(menuNumber);
             if(item.isPresent()) {
-                OrderItem orderItem = new OrderItem(item.get(), count);
-                orderItems.add(orderItem);
+                try {
+                    OrderItem orderItem = new OrderItem(item.get(), count);
+                    item.get().removeStock(count);
+                    orderItems.add(orderItem);
+                }catch (OutOfStockException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 System.out.println("해당하는 메뉴가 없습니다.");
             };
