@@ -1,17 +1,15 @@
-package service;
+package controller;
 
-import domain.Employee;
+import model.Employee;
 import enums.EmployeeRole;
-import util.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static util.DrawBox.*;
 import static util.InputHandler.*;
 
-public class EmployeeService {
+public class EmployeeController {
     List<Employee> employees= new ArrayList<>();
 
     public void manageEmployees() {

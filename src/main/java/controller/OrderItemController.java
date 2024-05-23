@@ -1,25 +1,23 @@
-package service;
+package controller;
 
-import controller.MenuController;
-import exception.OutOfStockException;
 import model.Item;
 import model.OrderItem;
+import exception.OutOfStockException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static util.InputHandler.getIntInput;
-import static util.InputHandler.getStringInput;
+import static util.InputHandler.*;
 
-public class OrderItemService {
-//    private MenuService menuService;
+public class OrderItemController {
+//    private MenuController menuController;
 //
 //    private List<OrderItem> orderItems;
 //
-//    public OrderItemService(MenuService menuService) {
+//    public OrderItemController(MenuController menuController) {
 //        orderItems = new ArrayList<>();
-//        this.menuService = menuService;
+//        this.menuController = menuController;
 //    }
 //
 //    public List<OrderItem> createOrderItem() {      //주문 항목을 생성하고 반환한다.( 이걸 메서드를 두가지로 나눠서 하는게 나을까)
@@ -28,7 +26,7 @@ public class OrderItemService {
 //        while(startedOrder) {
 //            int menuNumber = getIntInput("메뉴를 선택하세요: ");
 //            int count = getIntInput("수량을 입력하세요: ");
-//            Optional<Item> item = menuService.findItemById(menuNumber);
+//            Optional<Item> item = menuController.findItemById(menuNumber);
 //            if(item.isPresent()) {
 //                try {
 //                    OrderItem orderItem = new OrderItem(item.get(), count);
@@ -48,5 +46,4 @@ public class OrderItemService {
 //        }
 //        return orderItems;
 //    }
-
 }

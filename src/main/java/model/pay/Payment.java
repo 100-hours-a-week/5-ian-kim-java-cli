@@ -1,6 +1,6 @@
-package domain.pay;
+package model.pay;
 
-import domain.Order;
+import model.Order;
 import exception.PayException;
 
 import java.util.List;
