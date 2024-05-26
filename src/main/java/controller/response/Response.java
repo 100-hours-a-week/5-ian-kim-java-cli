@@ -17,8 +17,8 @@ public class Response<T> {
         return new Response<T>("SUCCESS", result);
     }
 
-    public static Response<String> error(String resultCode) {       //에러 메시지를 출력해야하므로 String 타입으로 설정
-        return new Response<String>("FAIL", resultCode);
+    public static <T> Response<T> error(T result) {       //에러 메시지를 출력해야하므로 String 타입으로 설정
+        return new Response<>("FAIL", null);
     }
 
     public String getResultCode() {

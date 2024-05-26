@@ -1,39 +1,33 @@
 package controller;
 
+import controller.request.MenuNumberWithStockRequest;
+import controller.response.Response;
 import model.Order;
 import model.OrderItem;
 import model.Table;
+import service.OrderService;
 
+import javax.swing.text.html.parser.Entity;
+import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
-//    private final TableController tableController;
-//    private final OrderItemController orderItemController;
+    OrderService orderService;
 //
+////
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 //
-//    public OrderController(TableController tableController, OrderItemController orderItemController) {
-//        orders = new ArrayList<>();
-//        this.tableController = tableController;
-//        this.orderItemController = orderItemController;
-//    }
-//
-//    public void createOrder(int tableId) {
-//        List<OrderItem> orderItems = orderItemController.createOrderItem();
-//        Table table = tableController.findTableById(tableId);
-//        Order order = new Order(orderItems, table);
-//        orders.add(order);
-//        table.addOrder(order);
-//        table.occupyTable();
-//    }
-//
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public List<Order> getOrderHistory(int tableId) {
-//        return tableController.findTableById(tableId).getOrders();
-//    }
+    public Response<Void> postOrder(int tableId, MenuNumberWithStockRequest request) {
+        orderService.createOrder(tableId, request);
+        return Response.success();
+    }
+
+    public Response<List<Order>> getTableOrderList(int tableId) {
+        return Response.success(orderService.getTableOrderHistory(tableId));
+    }
 
 }
 

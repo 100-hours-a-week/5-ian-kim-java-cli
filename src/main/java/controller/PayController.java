@@ -1,10 +1,15 @@
 package controller;
 
+import controller.request.PayByCardRequest;
+import controller.request.PayByCashRequest;
+import controller.response.Response;
 import model.Order;
 import model.pay.CardPayment;
 import model.pay.CashPayment;
 import model.pay.Payment;
 import exception.PayException;
+import service.PayService;
+import service.TableService;
 
 import java.util.List;
 
@@ -12,12 +17,36 @@ import static util.InputHandler.*;
 
 
 public class PayController {
-//    private final TableController tableController;
-//
-//    public PayController(TableController tableController) {
-//        this.tableController = tableController;
-//    }
-//
+    private final PayService payService;
+    private final TableService tableService;
+    public PayController(PayService payService, TableService tableService) {
+        this.payService = payService;
+        this.tableService = tableService;
+    }
+
+    public Response<String> processCardPayment(PayByCardRequest request) {
+        String cardReceipt = null;
+        try {
+            cardReceipt = payService.payByCard(request);
+            tableService.clearTable(request.getTableId());
+        } catch (PayException e) {
+            System.out.println(e.getMessage());
+        }
+        return Response.success(cardReceipt);
+    }
+
+    public Response<String> processCashPayment(PayByCashRequest request) {
+        String cashReceipt = null;
+        try {
+            cashReceipt = payService.payByCash(request);
+            tableService.clearTable(request.getTableId());
+        } catch (PayException e) {
+            System.out.println(e.getMessage());
+        }
+        return Response.success(cashReceipt);
+    }
+
+
 //    private void payByCard(int tableId, String cardNumber, String cardPassword, int monthlyInstallment) throws PayException {
 //        List<Order> orders = tableController.getOrderHistory(tableId);
 //        CardPayment cardPayment = new CardPayment("ian's PUB", orders, cardNumber, cardPassword, monthlyInstallment);
