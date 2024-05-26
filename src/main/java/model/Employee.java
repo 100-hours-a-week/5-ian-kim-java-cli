@@ -1,19 +1,19 @@
-package domain;
+package model;
 
 import enums.EmployeeRole;
 
 public class Employee extends Person {
 
-    EmployeeRole employeeRole;;
+    String employeeRole;    //직급
     int hourlyRate;     //시급
 
-    public Employee(String name, EmployeeRole employeeRole, int hourlyRate) {
+    public Employee(String name, String employeeRole, int hourlyRate) {
         super(name);
         this.employeeRole = employeeRole;
         this.hourlyRate = hourlyRate;
     }
 
-    public EmployeeRole getRole() {
+    public String getRole() {
         return employeeRole;
     }
 

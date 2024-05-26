@@ -1,114 +1,43 @@
-import domain.Category;
-import domain.Item;
+
+import controller.*;
 import service.*;
-import util.InputHandler;
-import util.PasswordManager;
-
-import java.util.Scanner;
-
-import static util.DrawBox.drawBox;
-import static util.InputHandler.*;
+import view.*;
 
 public class Main {
     public static void main(String[] args) {
         TableService tableService = new TableService();
-        PayService payService = new PayService(tableService);
-        EmployeeService employeeService = new EmployeeService();
+        TableController tableController = new TableController(tableService);
+        TableView tableView = new TableView(tableController);
+
         MenuService menuService = new MenuService();
+        MenuController menuController = new MenuController(menuService);
+        MenuView menuView = new MenuView(menuController);
+
         OrderItemService orderItemService = new OrderItemService(menuService);
-        OrderService orderService = new OrderService(tableService,orderItemService);
 
-        menuService.defaultMenu();
-        boolean start = true;       //프로그램을 시작한다.
-
-        while (start) {
-            String text = "1. 주문하기    2. 관리자 전용   3. 테이블 현황    4. 프로그램 종료";
-            // ASCII 아트로 네모난 박스 출력
-            drawBox(100, 5, text);
-
-            int menu = getIntInput("메뉴를 선택하세요: ");
-            switch (menu) {
-                case 1:
-                    boolean customer = true;
-                    while (customer) {
-                        tableService.showTableStatus();
-                        int table = getIntInput("테이블 번호를 선택하세요: ");
-
-                        if(!tableService.isValidTableNumber(table)) {
-                            System.out.println("잘못된 테이블 번호입니다.");
-                            continue;
-                        }
-
-                        drawBox(100, 5, "1. 메뉴 선택       2. 주문 확인       3. 결제 하기       4. 뒤로 가기");
-                        int selectedCustomer = getIntInput("메뉴를 선택하세요 : ");
-                        switch (selectedCustomer) {
-                            case 1:
-                                menuService.displayMenu();
-                                orderService.createOrder(table);
-                                break;
-                            case 2:
-                                orderService.orderHistory(table);
-                                break;
-                            case 3:
-                                payService.displayPayment(table);
-                                break;
-                            case 4:
-                                customer = false;
-                                break;
-                            default:
-                                System.out.println("잘못된 입력입니다.");
-                        }
-                    }
-                    break;
-
-                case 2:
-                    String password = getStringInput("비밀번호를 입력하세요 : ");
-                    PasswordManager passwordManager = new PasswordManager();
-                    if (!passwordManager.checkPassword(password)) {
-                        System.out.println("비밀번호가 틀렸습니다.");
-                    } else {
-                        boolean admin = true;
-                        while (admin) {
-                            drawBox(120, 5, "1. 매출 확인     2. 메뉴 추가     3. 메뉴 삭제      4. 메뉴 수정      5. 직원 관리     6. 뒤로가기");
-                            int adminMenu = getIntInput("번호를 선택하세요: ");
-                            switch (adminMenu) {
-                                case 1:
-                                    System.out.println("매출 확인");
-                                    break;
-                                case 2:
-                                    menuService.itemRegister();
-                                    break;
-                                case 3:
-                                    menuService.itemDelete();           // 메뉴 삭제
-                                    break;
-                                case 4:
-                                    menuService.itemUpdate();
-                                    break;
-                                case 5:
-                                    employeeService.manageEmployees();
-                                    break;
-                                case 6:
-                                    admin = false;
-                                    break;
-                                default:
-                                    System.out.println("잘못된 입력입니다.");
-                            }
-                        }
-                    }
-                    break;
-
-                case 3:
-                    tableService.showTableStatus();
-                    break;
+        OrderService orderService = new OrderService(orderItemService,tableService);
+        OrderController orderController = new OrderController(orderService);
+        OrderView orderView = new OrderView(orderController);
 
 
-                case 4:
-                    System.out.println("프로그램 종료");
-                    start = false;
-                    break;
-                default:
-                    System.out.println("잘못된 입력입니다.");
-            }
-        }
+        PayService payService = new PayService(tableService);
+        PayController payController = new PayController(payService, tableService);
+        PayView payView = new PayView(payController);
+
+
+        EmployeeService employeeService = new EmployeeService();
+        EmployeeController employeeController = new EmployeeController(employeeService);
+        EmployeeView employeeView = new EmployeeView(employeeController);
+
+        MainView mainView = new MainView(tableView,orderView,menuView,payView,employeeView);
+        mainView.run();
+//        PayController payController = new PayController(tableController);
+//        EmployeeController employeeController = new EmployeeController();
+//        MenuController menuController = new MenuController();
+//        OrderItemController orderItemController = new OrderItemController(menuController);
+//        OrderController orderController = new OrderController(tableController, orderItemController);
+//
+////        menuController.defaultMenu();
+
     }
 }

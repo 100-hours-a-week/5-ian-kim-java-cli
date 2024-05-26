@@ -1,4 +1,4 @@
-package domain.pay;
+package model.pay;
 
 import exception.PayException;
 

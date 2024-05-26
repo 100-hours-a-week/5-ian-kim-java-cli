@@ -1,4 +1,6 @@
-package domain;
+package model;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +8,7 @@ import java.util.List;
 public class Category {
     private int idCouneter = 0;
     private String categoryName;
+    @JsonManagedReference
     private List<Item> items = new ArrayList<Item>();
 
     public Category(String categoryName, int idCounter) {
