@@ -1,18 +1,13 @@
 package view;
 
-import controller.request.CategoryNumberRequest;
 import controller.request.ItemCodeRequest;
 import controller.request.ItemInfoRequest;
 import controller.request.UpdateItemInfoRequest;
 import controller.response.DisplayMenuResponse;
-import exception.InvalidItemException;
-import exception.PayException;
 import model.Category;
 import model.Item;
 import controller.MenuController;
 import util.AsciiArt;
-
-import java.util.List;
 
 import static util.InputHandler.getIntInput;
 import static util.InputHandler.getStringInput;
@@ -69,14 +64,14 @@ public class MenuView {
         }
 
         ItemInfoRequest itemInfoRequest = new ItemInfoRequest(categorySelect, itemName, itemPrice, itemStock);
-        menuController.itemRegister(itemInfoRequest);
+        menuController.createMenu(itemInfoRequest);
     }
 
     public void displayDeleteMenu() {
         displayMenu();
         int itemId = getIntInput("삭제할 아이템의 코드를 입력하세요 : ");
         ItemCodeRequest itemCodeRequest = new ItemCodeRequest(itemId);
-        menuController.itemDelete(itemCodeRequest.getItemCode());
+        menuController.deleteMenu(itemCodeRequest.getItemCode());
     }
 
     public void displayUpdateMenu() {
@@ -92,7 +87,7 @@ public class MenuView {
         }
 
         UpdateItemInfoRequest itemInfoRequest = new UpdateItemInfoRequest(itemId, itemName, itemPrice, itemStock);
-        menuController.itemUpdate(itemInfoRequest);
+        menuController.updateMenu(itemInfoRequest);
     }
 
 

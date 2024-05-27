@@ -21,9 +21,6 @@ public class Employee extends Person {
         return hourlyRate;
     }
 
-    public int calculatePay(int hoursWorked) {
-        return hoursWorked * hourlyRate;
-    }
 }
 
 

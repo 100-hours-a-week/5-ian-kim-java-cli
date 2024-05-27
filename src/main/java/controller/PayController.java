@@ -29,10 +29,11 @@ public class PayController {
         try {
             cardReceipt = payService.payByCard(request);
             tableService.clearTable(request.getTableId());
+            return Response.success(cardReceipt);
         } catch (PayException e) {
             System.out.println(e.getMessage());
+            return Response.error(e.getMessage());
         }
-        return Response.success(cardReceipt);
     }
 
     public Response<String> processCashPayment(PayByCashRequest request) {
