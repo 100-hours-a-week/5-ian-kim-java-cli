@@ -2,12 +2,12 @@ package util;
 
 public class AsciiArt {
     public static void mainLogo() {
-//        try {
-//            // Wait for 3 seconds
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            // Wait for 3 seconds
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String title = "\n" +
                 " ______                         __                         ____     __  __      ____      \n" +
                 "/\\__  _\\                       /\\ \\                       /\\  _`\\  /\\ \\/\\ \\    /\\  _`\\    \n" +

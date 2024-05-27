@@ -1,27 +1,27 @@
 package controller.response;
 
 public class Response<T> {
-    private String resultCode;
+    private boolean resultCode;
     private T result;
 
-    public Response(String resultCode, T result) {
+    public Response(boolean resultCode, T result) {
         this.resultCode = resultCode;
         this.result = result;
     }
 
     public static <T> Response<T> success() {
-        return new Response<T>("SUCCESS", null);
+        return new Response<T>(false, null);
     }
 
     public static <T> Response<T> success(T result) {
-        return new Response<T>("SUCCESS", result);
+        return new Response<T>(true, result);
     }
 
     public static <T> Response<T> error(T result) {       //에러 메시지를 출력해야하므로 String 타입으로 설정
-        return new Response<>("FAIL", null);
+        return new Response<>(false, null);
     }
 
-    public String getResultCode() {
+    public boolean getResultCode() {
         return resultCode;
     }
 

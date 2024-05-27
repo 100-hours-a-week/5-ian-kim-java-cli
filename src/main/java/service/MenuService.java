@@ -4,13 +4,10 @@ import controller.request.ItemInfoRequest;
 import controller.request.UpdateItemInfoRequest;
 import model.Category;
 import model.Item;
-import util.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static util.InputHandler.*;
 
 public class MenuService {
     Category c100 = new Category("튀김류", 100);
@@ -48,7 +45,7 @@ public class MenuService {
         c500.addItem(new Item("계란말이", 6000, 20)); // 사이드메뉴
     }
 
-    public void itemRegister(ItemInfoRequest itemInfoRequest) {
+    public void addItem(ItemInfoRequest itemInfoRequest) {
         try {
             Category category = findCategoryById(itemInfoRequest.getCategoryNumber())
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 카테고리가 없습니다."));
@@ -62,7 +59,7 @@ public class MenuService {
         }
     }
 
-    public void itemDelete(int itemId) {
+    public void removeItem(int itemId) {
         try {
             Item findItem = findItemById(itemId)
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 아이템이 없습니다."));
@@ -74,7 +71,7 @@ public class MenuService {
         }
     }
 
-    public void itemUpdate(UpdateItemInfoRequest itemInfoRequest) {
+    public void updateItem(UpdateItemInfoRequest itemInfoRequest) {
         try {
             Item findItem = findItemById(itemInfoRequest.getItemNumber())
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 아이템이 없습니다."));

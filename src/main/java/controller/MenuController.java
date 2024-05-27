@@ -1,6 +1,5 @@
 package controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.request.ItemInfoRequest;
 import controller.request.UpdateItemInfoRequest;
 import controller.response.DisplayMenuResponse;
@@ -9,13 +8,8 @@ import model.Category;
 import model.Item;
 import service.MenuService;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static util.InputHandler.*;
 
 public class MenuController {
     private final MenuService menuService;
@@ -31,19 +25,19 @@ public class MenuController {
     }
 
 
-    public Response<Void> itemRegister(ItemInfoRequest itemInfoRequest) {
-        menuService.itemRegister(itemInfoRequest);
+    public Response<Void> createMenu(ItemInfoRequest itemInfoRequest) {
+        menuService.addItem(itemInfoRequest);
         return Response.success(null);
     }
 
 
-    public Response<Void> itemDelete(int itemId) {
-        menuService.itemDelete(itemId);
+    public Response<Void> deleteMenu(int itemId) {
+        menuService.removeItem(itemId);
         return Response.success(null);
     }
 
-    public Response<Void> itemUpdate(UpdateItemInfoRequest itemInfoRequest) {
-        menuService.itemUpdate(itemInfoRequest);
+    public Response<Void> updateMenu(UpdateItemInfoRequest itemInfoRequest) {
+        menuService.updateItem(itemInfoRequest);
         return Response.success(null);
     }
 

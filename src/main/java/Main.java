@@ -31,13 +31,6 @@ public class Main {
 
         MainView mainView = new MainView(tableView,orderView,menuView,payView,employeeView);
         mainView.run();
-//        PayController payController = new PayController(tableController);
-//        EmployeeController employeeController = new EmployeeController();
-//        MenuController menuController = new MenuController();
-//        OrderItemController orderItemController = new OrderItemController(menuController);
-//        OrderController orderController = new OrderController(tableController, orderItemController);
-//
-////        menuController.defaultMenu();
 
     }
 }

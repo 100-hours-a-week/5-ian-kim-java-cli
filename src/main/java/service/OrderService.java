@@ -20,8 +20,8 @@ public class OrderService {
     }
 
 
-    public void createOrder(int tableId, MenuNumberWithStockRequest request) {
-        List<OrderItem> orderItems = orderItemService.createOrderItem(request);
+    public void addOrder(int tableId, MenuNumberWithStockRequest request) {
+        List<OrderItem> orderItems = orderItemService.addOrderItem(request);
         Table table = tableService.findTableById(tableId);
         Order order = new Order(orderItems, table);
         orders.add(order);

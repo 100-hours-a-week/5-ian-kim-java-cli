@@ -5,6 +5,7 @@ import controller.request.PayByCardRequest;
 import controller.request.PayByCashRequest;
 import controller.request.TableNumberRequest;
 import controller.response.PayByCardResponse;
+import controller.response.Response;
 import exception.PayException;
 import util.DrawBox;
 
@@ -28,19 +29,26 @@ public class PayView {
                 int monthlyInstallment = getIntInput("할부개월수를 입력해주세요 : ");
 
                 PayByCardRequest cardRequest = new PayByCardRequest(tableId, cardNumber, cardPassword, monthlyInstallment);
-                String cardReceipt = payController.processCardPayment(cardRequest).getResult();
-                int cardHeight = cardReceipt.split("\n").length+10;
-                DrawBox.drawBox(80, cardHeight, cardReceipt);
-
-
+                Response<String> cardResponse = payController.processCardPayment(cardRequest);
+                if (cardResponse.getResultCode()) {
+                    String cardReceipt = cardResponse.getResult();
+                    int cardHeight = cardReceipt.split("\n").length+10;
+                    DrawBox.drawBox(80, cardHeight, cardReceipt);
+                } else {
+                    System.out.println("결제에 실패하였습니다.");
+                }
                 break;
             case 2:
                 String cashReceiptNumber = getStringInput("현금영수증 번호를 입력해주세요 : ");
                 PayByCashRequest cashRequest = new PayByCashRequest(tableId, cashReceiptNumber);
-                String cashReceipt = payController.processCashPayment(cashRequest).getResult();
-                int cashHeight = cashReceipt.split("\n").length+10;
-                DrawBox.drawBox(80, cashHeight, cashReceipt);
-
+                Response<String> cashResponse = payController.processCashPayment(cashRequest);
+                if(cashResponse.getResultCode()) {
+                    String cashReceipt = cashResponse.getResult();
+                    int cashHeight = cashReceipt.split("\n").length+10;
+                    DrawBox.drawBox(80, cashHeight, cashReceipt);
+                } else {
+                    System.out.println("결제에 실패하였습니다.");
+                }
                 break;
             default:
                 System.out.println("결제 방법을 잘못 입력하셨습니다.");

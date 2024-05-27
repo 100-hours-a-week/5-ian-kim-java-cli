@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
-    private int idCouneter = 0;
+    private int idCounter = 0;
     private String categoryName;
     @JsonManagedReference
     private List<Item> items = new ArrayList<Item>();
 
     public Category(String categoryName, int idCounter) {
         this.categoryName = categoryName;
-        this.idCouneter = idCounter;
+        this.idCounter = idCounter;
     }
 
 
     public void addItem(Item item) {
-        item.setId(++idCouneter);
+        item.setId(++idCounter);
         items.add(item);
         item.setCategory(this);
     }
@@ -29,7 +29,7 @@ public class Category {
     }
 
     public int getIdCounter() {
-        return idCouneter;
+        return idCounter;
     }
 
     public String getCategoryName() {
