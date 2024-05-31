@@ -17,19 +17,6 @@ public class TableService {
         }
     }
 
-    public List<String> getTableStatuses() {
-        List<String> tableStatus = new ArrayList<>();
-        for (Table table : tables) {
-            String status = table.getIsOccupied() ? "사용중" : "비어있음";
-            int total = table.getOrders().stream()
-                    .mapToInt(Order::calculateTotalPrice)
-                    .sum();
-            String text = "테이블 번호는: " + table.getTableNumber() + "\n테이블 상태는: " + status + "\n현재 금액: " + total;
-            tableStatus.add(text);
-        }
-        return tableStatus;
-    }
-
 
     public boolean isValidTableNumber(int tableNumber) {
         return tables.stream().anyMatch(table -> table.getTableNumber() == tableNumber);

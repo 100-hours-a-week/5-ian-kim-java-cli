@@ -37,4 +37,9 @@ public class OrderItemService {
         return orderItems;
     }
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+
 }

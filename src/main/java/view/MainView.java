@@ -1,7 +1,7 @@
 package view;
 
 import controller.request.TableNumberRequest;
-import enums.EmployeeRole;
+import thread.CookStatusManager;
 import util.PasswordManager;
 
 import static util.DrawBox.drawBox;
@@ -14,14 +14,17 @@ public class MainView {
     OrderView orderView;
     PayView payView;
     EmployeeView employeeView;
-    public MainView(TableView tableView, OrderView orderView, MenuView menuView, PayView payView, EmployeeView employeeView) {
+    CookStatusManager cookStatusManager;
+    public MainView(TableView tableView, OrderView orderView, MenuView menuView, PayView payView, EmployeeView employeeView, CookStatusManager cookStatusManager) {
         this.tableView = tableView;
         this.menuView = menuView;
         this.orderView = orderView;
         this.payView = payView;
         this.employeeView = employeeView;
+        this.cookStatusManager = cookStatusManager;
     }
-    public void run() {
+
+    public void mainStart() {
         boolean start = true;       //프로그램을 시작한다.
 
         while (start) {
@@ -43,7 +46,7 @@ public class MainView {
                         if(!tableView.validateTableNumber(tableNumberRequest)) {
                             continue;
                         }
-                        drawBox(100, 5, "1. 메뉴 선택       2. 주문 확인       3. 결제 하기       4. 뒤로 가기");
+                        drawBox(100, 5, "1. 메뉴 선택       2. 주문 확인       3. 결제 하기       4. 뒤로 가기       5. 요리 현황");
                         int selectedCustomer = getIntInput("메뉴를 선택하세요 : ");
                         switch (selectedCustomer) {
                             case 1:
@@ -58,6 +61,15 @@ public class MainView {
                                 break;
                             case 4:
                                 customer = false;
+                                break;
+                            case 5:
+                                cookStatusManager.showCookStatus();
+                                // 사용자 입력 받기
+                                System.out.println("아무 키나 누르면 요리 현황을 숨깁니다.");
+                                getStringInput("");
+
+                                // CookStatusManager의 hideCookStatus() 메서드 호출
+                                cookStatusManager.hideCookStatus();
                                 break;
                             default:
                                 System.out.println("잘못된 입력입니다.");

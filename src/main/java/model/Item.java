@@ -1,7 +1,6 @@
 package model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import exception.OutOfStockException;
 
 public class Item {
@@ -10,7 +9,6 @@ public class Item {
     private int price;
     private int stock;
 
-    @JsonBackReference
     private Category category;
 
 

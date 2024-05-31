@@ -2,6 +2,7 @@ package view;
 
 import controller.TableController;
 import controller.request.TableNumberRequest;
+import controller.response.TableStatusResponse;
 import util.AsciiArt;
 import util.DrawBox;
 
@@ -15,10 +16,13 @@ public class TableView {
 
     public void showTableStatus() {
         AsciiArt.mainLogo();
-        List<String> tableStatuses = tableController.getTableStatuses().getResult();
-        for(String text : tableStatuses) {
+        List<TableStatusResponse> tableStatuses = tableController.getTableStatuses().getResult();
+        System.out.println("--------------------------------------------------");
+        for(TableStatusResponse tableStatus : tableStatuses) {
+            String text = "테이블 번호: " + tableStatus.getTableNumber() + "\n상태: " + tableStatus.getStatus() + "\n총 금액: " + tableStatus.getTotal();
             DrawBox.drawBox(50, 5, text);
         }
+        System.out.println("--------------------------------------------------");
     }
 
     public boolean validateTableNumber(TableNumberRequest request) {
