@@ -47,7 +47,7 @@ public class OrderService {
                     } catch (IndexOutOfBoundsException e) {
 
                     }
-                    lock.notifyAll(); // Notify all waiting threads
+                    lock.notifyAll();
                     System.out.println("새 주문이 추가되었습니다.");
                 }
         });

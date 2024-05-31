@@ -44,7 +44,6 @@ public class Main {
         EmployeeView employeeView = new EmployeeView(employeeController);
 
 
-        // Add orders to the queue
         synchronized (lock) {
             orderQueue.addAll(orderItemService.getOrderItems());
         }
@@ -56,7 +55,6 @@ public class Main {
 
 
 
-        // Create and start threads
         List<Thread> chefs = new ArrayList<>();
         for (int i = 0; i < NUM_CHEFS; i++) {
 
